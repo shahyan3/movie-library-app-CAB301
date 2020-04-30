@@ -123,7 +123,10 @@ public class Main {
             staffMenu(membersCollection); // recursively go back to staff menu
         } else {
             // register this guy
+            System.out.println("Registering user...");
+//            membersCollection.addMember()
         }
+        System.out.println("hahhahahahaha...");
 
     }
 
