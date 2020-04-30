@@ -12,6 +12,7 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         // Setup Application by instantiating memberCollection
         MemberCollection membersCollection = new MemberCollection();  // static ???
+        // MoviesCollection moviesCollection = new MoviesCollection(); // static ???
         scanner = new Scanner(System.in);  // Create a Scanner object
 
         while(true) {
@@ -51,6 +52,31 @@ public class Main {
         }
     }
 
+    private static void userLogin(MemberCollection membersCollection) throws InterruptedException {
+        String username;
+        String password;
+
+        inputLine = scanner.nextLine();  // first next line consumes the "enter username" to enable next one to read user input
+
+        System.out.print("Enter username:(LastnameFirstname) ");
+
+        inputLine = scanner.nextLine();  // Read user input
+        username = inputLine;
+
+        System.out.print("Enter password: ");
+        inputLine = scanner.nextLine();  // Read user input
+        password = inputLine;
+
+        if(membersCollection.authenticateMember(username.trim(), password.trim())) { // check given username exists trim whitespace
+            // staff menu - authentication succeeded.
+            memberMenu(membersCollection);
+
+        } else { // username doesn't exist. Authentication failed.
+            System.out.println("\nCould not authenticate. Please go back to main menu...");
+            exitApp();
+        }
+    }
+
     public static void mainMenu(MemberCollection membersCollection) throws InterruptedException {
         System.out.println(" ");
         System.out.println("Welcome to the Community Library");
@@ -76,7 +102,7 @@ public class Main {
                 if(inputNum == EXIT) break;
 
             case 2:
-                memberMenu();
+                userLogin(membersCollection);
                 inputNum = scanner.nextInt();  // Read user input
                 if(inputNum == EXIT) break;
         }
@@ -144,7 +170,7 @@ public class Main {
             // isAdmin equals false - this is a normal user
             isAdmin = false;
             // create a new member
-            membersCollection.registerMember(fName, lName, address, phoneNumber, password, isAdmin);
+            membersCollection.registerUser(fName, lName, address, phoneNumber, password, isAdmin);
             // success. go back to main
             staffMenu(membersCollection);
         }
@@ -167,13 +193,13 @@ public class Main {
         Member member = memberCollection.getMember(fName, lName);
         if(member != null) {
             String phoneNumber = member.getPhoneNumber();
-            System.out.println( fName + " " + lName + "'s phone number is: " + phoneNumber);
+            System.out.println(">>" +fName + " " + lName + "'s phone number is: " + phoneNumber);
         }
         // return to staff menu
         staffMenu(memberCollection);
     }
 
-    public static void memberMenu() {
+    public static void memberMenu(MemberCollection memberCollection) {
         System.out.println(" ");
         System.out.println("========== Member Menu =============");
         System.out.println("1. Display all movies");
@@ -185,34 +211,21 @@ public class Main {
         System.out.println("=================================");
 
         System.out.print("Please make selection (1-5, or 0 to return to main menu): ");
-        }
-}
 
-//
-//class Auth {
-//
-//     public static boolean authenticate(String username, String password, MemberCollection list) {
-//
-//        HashMap usersDatabase = new HashMap<String, User>();
-//         // set user database with default root admin user
-//         User root = new User("staff", "today123", true);
-//
-//        usersDatabase.put("staff", root);
-//
-//        if(usersDatabase.containsKey(username)) {
-//           // check if password exists
-//            return true;
-//
-//        } else {
-//            // password does not match.
-//            return false;
-//        }
-//    }
-//
-//    public static int registerUser(String username, String password, Boolean isAdmin) {
-//         // check if username already exists
-//            // if not create a new user object and save in usersDatabase
-//        return 0;
-//    }
-//}
-//
+        inputNum = scanner.nextInt();  // Sub options for user menu
+        switch(inputNum) {
+            case 0:
+//                displayAllMoviesMenu(MovieCollection moviesList);
+            case 1:
+            case 2:
+            case 3:
+             case 4:
+         }
+
+    }
+
+    public static void displayAllMovies() {
+
+    }
+
+}

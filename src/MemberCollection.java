@@ -46,8 +46,9 @@ public class MemberCollection {
         return null;
     }
 
-    public void registerMember(String fName, String lName, String address, String phoneNumber, String password, boolean isAdmin) {
-        String username = String.join( "" , fName , lName);
+    // register non-admin users
+    public void registerUser(String fName, String lName, String address, String phoneNumber, String password, boolean isAdmin) {
+        String username = String.join( "" , lName, fName);
         Member newMember = new Member(fName, lName, username, password, phoneNumber, isAdmin);
 
         // add the member to the next free index in array
