@@ -103,12 +103,18 @@ public class Main {
             case 3:
                 registerMemberMenu(membersCollection);
             case 4:
+                findMemberPhoneMenu(membersCollection);
         }
     }
 
     public static void registerMemberMenu(MemberCollection membersCollection) throws InterruptedException {
         String fName;
         String lName;
+        String address;
+        String phoneNumber;
+        String password;
+        boolean isAdmin;
+
         inputLine = scanner.nextLine();
         System.out.print("Enter member's first name: ");
         inputLine = scanner.nextLine();
@@ -122,12 +128,49 @@ public class Main {
             System.out.println( ">> " + fName + " " + lName + " has already registered.");
             staffMenu(membersCollection); // recursively go back to staff menu
         } else {
-            // register this guy
-            System.out.println("Registering user...");
-//            membersCollection.addMember()
-        }
-        System.out.println("hahhahahahaha...");
+            // new user: register as a member
+            System.out.print("Enter member's address: ");
+            inputLine = scanner.nextLine();
+            address = inputLine;
 
+            System.out.print("Enter member's phone number: ");
+            inputLine = scanner.nextLine();
+            phoneNumber = inputLine;
+
+            System.out.print("Enter member's password (4 digits): ");      // #TODO enforce 4 digits
+            inputLine = scanner.nextLine();
+            password = inputLine;
+
+            // isAdmin equals false - this is a normal user
+            isAdmin = false;
+            // create a new member
+            membersCollection.registerMember(fName, lName, address, phoneNumber, password, isAdmin);
+            // success. go back to main
+            staffMenu(membersCollection);
+        }
+
+    }
+
+    public static void findMemberPhoneMenu(MemberCollection memberCollection) throws InterruptedException {
+        String fName, lName;
+
+        scanner.nextLine();     // consume a line, don't save it. So scanner saves the next input correctly.
+        System.out.print("Enter member's first name: ");
+        inputLine = scanner.nextLine();
+        fName = inputLine;
+
+        System.out.print("Enter member's last name: ");
+        inputLine = scanner.nextLine();
+        lName = inputLine;
+
+        // check if member with given creds exist in collection
+        Member member = memberCollection.getMember(fName, lName);
+        if(member != null) {
+            String phoneNumber = member.getPhoneNumber();
+            System.out.println( fName + " " + lName + "'s phone number is: " + phoneNumber);
+        }
+        // return to staff menu
+        staffMenu(memberCollection);
     }
 
     public static void memberMenu() {
