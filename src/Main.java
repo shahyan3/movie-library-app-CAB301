@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.InterruptedException;
 import java.util.concurrent.TimeUnit;
@@ -8,16 +9,19 @@ public class Main {
     public static Scanner scanner;
     public static int inputNum;
     public static String inputLine;
+    public static  MoviesCollection moviesCollection;
+    public static MemberCollection membersCollection;
+    public static Member currentUser;
 
     public static void main(String[] args) throws InterruptedException {
         // Setup Application by instantiating memberCollection
-        MemberCollection membersCollection = new MemberCollection();  // static ???
-        // MoviesCollection moviesCollection = new MoviesCollection(); // static ???
+        membersCollection = new MemberCollection();  // static ???
+        moviesCollection = new MoviesCollection(); // static ???
         scanner = new Scanner(System.in);  // Create a Scanner object
 
         while(true) {
             // main menu - welcome
-            mainMenu(membersCollection);
+            mainMenu();
         }
     }
 
@@ -27,7 +31,7 @@ public class Main {
         System.exit(0);
     }
 
-    private static void staffLogin(MemberCollection membersCollection) throws InterruptedException {
+    private static void staffLogin() throws InterruptedException {
         String username;
         String password;
 
@@ -44,7 +48,7 @@ public class Main {
 
         if(membersCollection.authenticateMember(username.trim(), password.trim())) { // check given username exists trim whitespace
             // staff menu - authentication succeeded.
-            staffMenu(membersCollection);
+            staffMenu();
 
         } else { // username doesn't exist. Authentication failed.
             System.out.println("\nCould not authenticate. Please go back to main menu...");
@@ -52,7 +56,7 @@ public class Main {
         }
     }
 
-    private static void userLogin(MemberCollection membersCollection) throws InterruptedException {
+    private static void userLogin() throws InterruptedException {
         String username;
         String password;
 
@@ -66,10 +70,11 @@ public class Main {
         System.out.print("Enter password: ");
         inputLine = scanner.nextLine();  // Read user input
         password = inputLine;
+            System.out.println(" ");
 
         if(membersCollection.authenticateMember(username.trim(), password.trim())) { // check given username exists trim whitespace
             // staff menu - authentication succeeded.
-            memberMenu(membersCollection);
+            memberMenu();
 
         } else { // username doesn't exist. Authentication failed.
             System.out.println("\nCould not authenticate. Please go back to main menu...");
@@ -77,7 +82,7 @@ public class Main {
         }
     }
 
-    public static void mainMenu(MemberCollection membersCollection) throws InterruptedException {
+    public static void mainMenu() throws InterruptedException {
         System.out.println(" ");
         System.out.println("Welcome to the Community Library");
         System.out.println("========== Main Menu =============");
@@ -95,21 +100,21 @@ public class Main {
 
         switch(inputNum) {
             case 1: // enter staff menu
-                staffLogin(membersCollection);   // authenticate for access
+                staffLogin();   // authenticate for access
 
                 // exit
                 inputNum = scanner.nextInt();  // Read user input
                 if(inputNum == EXIT) break;
 
             case 2:
-                userLogin(membersCollection);
+                userLogin();
                 inputNum = scanner.nextInt();  // Read user input
                 if(inputNum == EXIT) break;
         }
 
     }
 
-    public static void staffMenu(MemberCollection membersCollection) throws InterruptedException {
+    public static void staffMenu() throws InterruptedException {
         System.out.println(" ");
         System.out.println("========== Staff Menu =============");
         System.out.println("1. Add a new movie DVD");
@@ -123,17 +128,17 @@ public class Main {
         inputNum = scanner.nextInt();  // Sub options for staff menu
         switch(inputNum) {
             case 0:
-                mainMenu(membersCollection);
+                mainMenu();
             case 1:
             case 2:
             case 3:
-                registerMemberMenu(membersCollection);
+                registerMemberMenu();
             case 4:
-                findMemberPhoneMenu(membersCollection);
+                findMemberPhoneMenu();
         }
     }
 
-    public static void registerMemberMenu(MemberCollection membersCollection) throws InterruptedException {
+    public static void registerMemberMenu() throws InterruptedException {
         String fName;
         String lName;
         String address;
@@ -152,7 +157,7 @@ public class Main {
 
         if(membersCollection.checkMemberExists(fName, lName)) {
             System.out.println( ">> " + fName + " " + lName + " has already registered.");
-            staffMenu(membersCollection); // recursively go back to staff menu
+            staffMenu(); // recursively go back to staff menu
         } else {
             // new user: register as a member
             System.out.print("Enter member's address: ");
@@ -172,12 +177,12 @@ public class Main {
             // create a new member
             membersCollection.registerUser(fName, lName, address, phoneNumber, password, isAdmin);
             // success. go back to main
-            staffMenu(membersCollection);
+            staffMenu();
         }
 
     }
 
-    public static void findMemberPhoneMenu(MemberCollection memberCollection) throws InterruptedException {
+    public static void findMemberPhoneMenu() throws InterruptedException {
         String fName, lName;
 
         scanner.nextLine();     // consume a line, don't save it. So scanner saves the next input correctly.
@@ -190,42 +195,91 @@ public class Main {
         lName = inputLine;
 
         // check if member with given creds exist in collection
-        Member member = memberCollection.getMember(fName, lName);
+        Member member = membersCollection.getMember(fName, lName);
         if(member != null) {
             String phoneNumber = member.getPhoneNumber();
             System.out.println(">>" +fName + " " + lName + "'s phone number is: " + phoneNumber);
         }
         // return to staff menu
-        staffMenu(memberCollection);
+        staffMenu();
     }
 
-    public static void memberMenu(MemberCollection memberCollection) {
-        System.out.println(" ");
-        System.out.println("========== Member Menu =============");
-        System.out.println("1. Display all movies");
-        System.out.println("2. Borrow a movie DVD");
-        System.out.println("3. Return a movie DVD");
-        System.out.println("4. List current borrowed movie DVDs");
-        System.out.println("5. Display top 10 most popular movies");
-        System.out.println("0. Return to main menu");
-        System.out.println("=================================");
+    public static void memberMenu() {
 
-        System.out.print("Please make selection (1-5, or 0 to return to main menu): ");
+        if(user) {
+            System.out.println(" ");
+            System.out.println("========== Member Menu =============");
+            System.out.println("1. Display all movies");
+            System.out.println("2. Borrow a movie DVD");
+            System.out.println("3. Return a movie DVD");
+            System.out.println("4. List current borrowed movie DVDs");
+            System.out.println("5. Display top 10 most popular movies");
+            System.out.println("0. Return to main menu");
+            System.out.println("=================================");
 
-        inputNum = scanner.nextInt();  // Sub options for user menu
-        switch(inputNum) {
-            case 0:
-//                displayAllMoviesMenu(MovieCollection moviesList);
-            case 1:
-            case 2:
-            case 3:
-             case 4:
-         }
+            System.out.print("Please make selection (1-5, or 0 to return to main menu): ");
+
+            inputNum = scanner.nextInt();  // Sub options for user menu
+            switch (inputNum) {
+                case 0:
+                case 1:
+                    displayAllMoviesMenu();
+                case 2:
+                    borrowMovieMenu();
+                case 3:
+                case 4:
+            }
+        }
 
     }
 
-    public static void displayAllMovies() {
+    /** MovieCollection Calls -- to be fixed after creating BST  **/
+    // only called when user is authenticated
+    public static void displayAllMoviesMenu() {
+        ArrayList<Movie> list = moviesCollection.getAllMovies(); // shouldn't be a bst
 
+        for (Movie movie: list) {
+            System.out.println(" ");
+            System.out.println("Title: " + movie.getTitle());
+            System.out.println("Starring: " + movie.getStarring());
+            System.out.println("Director: " + movie.getDirector());
+            System.out.println("Genre: " + movie.getGenre());
+            System.out.println("Classification: " + movie.getClassification());
+            System.out.println("Duration: " + movie.getDuration());
+            System.out.println("Release Date: " + movie.getReleaseDate());
+            System.out.println("Copies Available: " + movie.getCopiesAvailable());
+            System.out.println("Times Rented: " + movie.getTimesRented());
+
+        }
+        memberMenu();  // display members menu again
+    }
+
+    public void borrowMovieMenu() { // #TODO
+        String movieName;
+        System.out.println("Enter movie title: ");
+        inputLine = scanner.nextLine();
+        movieName = inputLine.trim(); // remove extra whitespaces from string input
+
+        if(moviesCollection.movieExist(movieName)) {
+            boolean flag;
+
+            flag = moviesCollection.borrowMovie(movieName);
+
+            if(flag == NOT_FOUND){
+                System.out.println("Movie not found in database");
+                memberMenu(); // return menu
+            } else if(flag == UNAVAILABLE) {
+                System.out.println("Unavailable to borrow: " + movieName);
+                memberMenu(); // return to menu
+              } else if(flag == SUCCESS) {
+                currentUser.setLoaned(MovieName, numberOfCopies); // update user's loaned property
+                  System.out.println("You borrowed " + movieName);
+                  memberMenu(); // return to menu
+              } else {
+                System.out.println("Error. Try later");
+                memberMenu();
+            }
+        }
     }
 
 }

@@ -1,5 +1,5 @@
 public class MemberCollection {
-    private Member member;
+//    private Member member;
     private Member[] memberList;
     private int MAX_MEMBERS = 100;
 
