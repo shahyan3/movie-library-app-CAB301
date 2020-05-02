@@ -1,8 +1,8 @@
 public class MemberCollection {
-//    private Member member;
+
+    // private Member member;
     private Member[] memberList;
     private int MAX_MEMBERS = 100;
-
     private static int currentMemberCountIndex;
 
     public MemberCollection() {
@@ -14,14 +14,16 @@ public class MemberCollection {
     }
 
      // Binary search O(log n) time - CONVERT INTO BINARY SEARCH!!! #TODO convert to binary search
-    public boolean authenticateMember(String username, String password) {
+    public Member authenticateMember(String username, String password) {
         for(int i = 0; i < this.memberList.length; i++) {
+            Member member;
             if(this.memberList[i].getUsername().equals(username) &&
                     this.memberList[i].getPassword().equals(password)) {
-                 return true;
+                member = this.memberList[i];
+                 return member;
             }
         }
-        return false;
+        return null;
     }
     // Binary search O(log n) time - CONVERT INTO BINARY SEARCH!!! #TODO convert to binary search
     public boolean checkMemberExists(String firstName, String lastName) {
@@ -59,7 +61,5 @@ public class MemberCollection {
 
 
 
-//    private boolean addMember(Member member) {
-//
-//    }
+
 }

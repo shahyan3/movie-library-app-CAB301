@@ -1,6 +1,16 @@
 import java.util.ArrayList;
 
 public class MoviesCollection {
+    // static members
+    private static final int NOT_FOUND = -1;
+    private static final int UNAVAILABLE = 0;
+    private static final int SUCCESS = 1;
+    private static final int ERROR = -2;
+    private static final int INCREMENT_BY_ONE = 1;
+    private static final int DECREMENT_BY_ONE = -1;
+
+
+    // private members
     private ArrayList<Movie> moviesList;
     private int MAX_TITLES = 100;
 
@@ -39,8 +49,33 @@ public class MoviesCollection {
         return this.moviesList;
     }
 
-    public boolean movieExist(String movieName) {
-        return true;
+    // #TODO FIX TO BST LATER
+    public int movieExist(String movieName) {
+        for (Movie movie : this.moviesList) {
+            if(movie.getTitle().equalsIgnoreCase(movieName)) {
+                return SUCCESS;
+            }
+        }
+        return NOT_FOUND;
+    }
+
+    public int borrowMovie(String movieName, String username) {
+        // find movie
+        for (Movie movie : this.moviesList) {
+            if(movie.getTitle().equalsIgnoreCase((movieName))) {
+                // Movie available! borrow it
+                int flag = movie.setLoanedTo(username);
+
+                if (flag == SUCCESS) {
+                    return SUCCESS;
+                }
+
+                if(flag == UNAVAILABLE) {
+                    return UNAVAILABLE;
+                }
+            }
+        }
+        return ERROR;
     }
 }
 
