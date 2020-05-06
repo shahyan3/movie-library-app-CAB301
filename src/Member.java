@@ -38,17 +38,24 @@ public class Member {
         return this.isAdmin;
     }
 
+    // Borrow a movie - adds a hashmap data structure with movie name as key and # borrowed as value
     public void setOnLoan(int copiesLoaned, String movieName) {
-
-        Integer currentlyBorrowedCopies = this.onLoan.get(movieName); // #TODO doesn't update copies if statement.
-        if(currentlyBorrowedCopies != null && currentlyBorrowedCopies > 1) { // If a movie had been borrowed already and more copies are being borrowed find the hashmapping and update the total # of copies borrowed
+        Integer currentlyBorrowedCopies = this.onLoan.get(movieName);
+        if(currentlyBorrowedCopies != null && currentlyBorrowedCopies > 0) { // If a movie had been borrowed already and more copies are being borrowed find the hashmapping and update the total # of copies borrowed
             Integer updatedNumberOfCopies = currentlyBorrowedCopies + copiesLoaned;
-            this.onLoan.put(movieName, updatedNumberOfCopies);
+            System.out.println("Previously borrowed: " + currentlyBorrowedCopies);
+            System.out.println("updated: " + updatedNumberOfCopies);
+            // update current borrow value from current value to updated for movieName (key)
+            this.onLoan.replace(movieName, currentlyBorrowedCopies, updatedNumberOfCopies);
+        } else {
+            // if its first time borrow add the entry into hashmap
+            // create a new hashmap with the movie and # copies borrowed
+            this.onLoan.put(movieName, copiesLoaned);
         }
-        // create a new hashmap with the movie and # copies borrowed
-        this.onLoan.put(movieName, copiesLoaned);
+
     }
 
+    // @returns - all the values loaned
     public HashMap<String, Integer> getAllLoans() {
         return this.onLoan;
     }

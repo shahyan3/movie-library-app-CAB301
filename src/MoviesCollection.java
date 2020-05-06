@@ -71,7 +71,7 @@ public class MoviesCollection {
                 }
 
                 if(flag == UNAVAILABLE) {
-                    return UNAVAILABLE;
+                     return UNAVAILABLE;
                 }
             }
         }

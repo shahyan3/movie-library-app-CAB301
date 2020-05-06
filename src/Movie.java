@@ -72,7 +72,7 @@ public class Movie {
             this.copiesAvailable = this.copiesAvailable + DECREMENT_BY_ONE;
             this.timesRented = this.timesRented + INCREMENT_BY_ONE;
 
-//            System.out.println("==>> copiesAvailable" + this.copiesAvailable + ". timesRented: " + this.timesRented);
+            System.out.println("==>> copiesAvailable" + this.copiesAvailable + ". timesRented: " + this.timesRented);
             return SUCCESS;
         } else {
             return UNAVAILABLE;

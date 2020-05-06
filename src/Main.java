@@ -221,7 +221,7 @@ public class Main {
         staffMenu();
     }
 
-    public static void memberMenu() {
+    public static void memberMenu() throws InterruptedException {
 
         if(currentUser != null) {
             System.out.println(" ");
@@ -238,21 +238,22 @@ public class Main {
 
             inputNum = scanner.nextInt();  // Sub options for user menu
             switch (inputNum) {
-                case 0:
-                case 1:
-                    displayAllMoviesMenu();
-                case 2:
-                    borrowMovieMenu();
-                case 3:
-                case 4:
-            }
+                    case 0:
+                        mainMenu();
+                    case 1:
+                        displayAllMoviesMenu();
+                    case 2:
+                        borrowMovieMenu();
+                    case 3:
+                    case 4:
+                        listBorrowedMoviesMenu();
+                }
         }
-
     }
 
     /** MovieCollection Calls -- to be fixed after creating BST  **/
     // only called when user is authenticated
-    public static void displayAllMoviesMenu() {
+    public static void displayAllMoviesMenu() throws InterruptedException {
         ArrayList<Movie> list = moviesCollection.getAllMovies(); // shouldn't be a bst
 
         for (Movie movie: list) {
@@ -271,7 +272,7 @@ public class Main {
         memberMenu();  // display members menu again
     }
 
-    public static void borrowMovieMenu() { // #TODO
+    public static void borrowMovieMenu() throws InterruptedException { // #TODO
         String movieName;
 
         scanner.nextLine();
@@ -293,10 +294,13 @@ public class Main {
                 // add number of copies and movie loaned to users property...
                   currentUser.setOnLoan(1, movieName);
 
+                  // test block
                 System.out.println("\n===> test User's loans");
                 HashMap<String, Integer> onLoans = currentUser.getAllLoans();
-                System.out.println(onLoans.entrySet());
+                // print all the values
+                onLoans.forEach((key, value) -> System.out.println(key + " " + value));
                 System.out.println("\n=======================");
+                // end
 
 
                 System.out.println("You borrowed " + movieName);
@@ -310,6 +314,15 @@ public class Main {
             memberMenu(); // return menu
         }
 
+    }
+
+    public static void listBorrowedMoviesMenu() throws InterruptedException {
+         System.out.println("List of currently borrowed movies: ");
+        HashMap<String, Integer> onLoans = currentUser.getAllLoans();
+        // print all the values
+        onLoans.forEach((key, value) -> System.out.println("Title:" + key + ", " + value + " on loan."));
+
+        memberMenu();
     }
 
 }

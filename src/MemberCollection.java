@@ -9,8 +9,10 @@ public class MemberCollection {
         this.memberList = new Member[MAX_MEMBERS];
         // default root admin user
         Member admin = new Member("john", "doe", "staff", "today123", "0423911239", true);
+        Member testUser = new Member("mike", "chan", "chanmike", "1111", "0423911239", true);
         this.memberList[0] = admin;
-        currentMemberCountIndex = 0;
+        this.memberList[1] = testUser;
+        currentMemberCountIndex = 1;    // #TODO make it 0 when i delete testUser!
     }
 
      // Binary search O(log n) time - CONVERT INTO BINARY SEARCH!!! #TODO convert to binary search
