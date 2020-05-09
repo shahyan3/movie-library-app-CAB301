@@ -1,7 +1,8 @@
 import java.util.HashMap;
 
 public class Member {
-    public String username; // accessible to other classes.
+    private int memberID;
+    private String username; // accessible to other classes.
     private String password;
     private boolean isAdmin;
     private String fName;
@@ -9,7 +10,8 @@ public class Member {
     private String phoneNumber;
     private HashMap<String, Integer> onLoan;    // keeps track of movies loaned value = loanedCopies and key = movie name
 
-    public Member(String fName, String lName, String username, String password, String phoneNumber, boolean isAdmin) {
+    public Member( int memberID, String fName, String lName, String username, String password, String phoneNumber, boolean isAdmin) {
+        this.memberID = memberID;
         this.username = username;
         this.password = password;
         this.fName = fName;
@@ -18,6 +20,10 @@ public class Member {
         this.isAdmin = isAdmin;
         this.onLoan = new HashMap<String, Integer>();
     }
+    public int getMemberID() {
+        return memberID;
+    }
+
     public String getFName() {
         return this.fName;
     }
@@ -41,7 +47,7 @@ public class Member {
     // Borrow a movie - adds a hashmap data structure with movie name as key and # borrowed as value
     public void setOnLoan(int copiesLoaned, String movieName) {
         Integer currentlyBorrowedCopies = this.onLoan.get(movieName);
-        if(currentlyBorrowedCopies != null && currentlyBorrowedCopies > 0) { // If a movie had been borrowed already and more copies are being borrowed find the hashmapping and update the total # of copies borrowed
+        if(currentlyBorrowedCopies != null && currentlyBorrowedCopies > 0) { // If a movie had been borrowed already by this user and borrowing more copies - find existing hashmap node and update the total # of copies borrowed
             Integer updatedNumberOfCopies = currentlyBorrowedCopies + copiesLoaned;
             System.out.println("Previously borrowed: " + currentlyBorrowedCopies);
             System.out.println("updated: " + updatedNumberOfCopies);

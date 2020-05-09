@@ -8,6 +8,7 @@ public class Movie {
     private static final int INCREMENT_BY_ONE = 1;
 
     // private members
+    private int movieID;
     private String title;
     private String starring;
     private String director;
@@ -18,8 +19,9 @@ public class Movie {
     private int copiesAvailable;
     private int timesRented;
 
-    public Movie(String title, String starring, String director, String genre, String classification,
+    public Movie(int movieID, String title, String starring, String director, String genre, String classification,
                  String duration, int releaseDate, int copiesAvailable, int timesRented) {
+        this.movieID = movieID;
         this.title = title;
         this.starring = starring;
         this.director = director;
@@ -31,6 +33,9 @@ public class Movie {
         this.timesRented = timesRented;
     }
 
+    public int getMovieID() {
+        return movieID;
+    }
     public String getTitle() {
         return title;
     }

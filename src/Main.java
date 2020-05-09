@@ -26,6 +26,7 @@ public class Main {
         moviesCollection = new MoviesCollection(); // static ???
         scanner = new Scanner(System.in);  // Create a Scanner object
 
+
         while(true) {
             // main menu - welcome
             mainMenu();
@@ -127,6 +128,8 @@ public class Main {
 
     }
 
+
+
     public static void staffMenu() throws InterruptedException {
 
 
@@ -191,8 +194,11 @@ public class Main {
 
             // isAdmin equals false - this is a normal user
             isAdmin = false;
+            // create member id (which is the current index count of the member array
+            int currentIndex = membersCollection.getCurrentMemberCountIndex();
+            currentIndex += 1;  // next index where this member will be in array position
             // create a new member
-            membersCollection.registerUser(fName, lName, address, phoneNumber, password, isAdmin);
+            membersCollection.registerUser(currentIndex, fName, lName, address, phoneNumber, password, isAdmin);
             // success. go back to main
             staffMenu();
         }
@@ -252,23 +258,9 @@ public class Main {
     }
 
     /** MovieCollection Calls -- to be fixed after creating BST  **/
-    // only called when user is authenticated
+    // only called when user is authenticated    - fixed
     public static void displayAllMoviesMenu() throws InterruptedException {
-        ArrayList<Movie> list = moviesCollection.getAllMovies(); // shouldn't be a bst
-
-        for (Movie movie: list) {
-            System.out.println(" ");
-            System.out.println("Title: " + movie.getTitle());
-            System.out.println("Starring: " + movie.getStarring());
-            System.out.println("Director: " + movie.getDirector());
-            System.out.println("Genre: " + movie.getGenre());
-            System.out.println("Classification: " + movie.getClassification());
-            System.out.println("Duration: " + movie.getDuration());
-            System.out.println("Release Date: " + movie.getReleaseDate());
-            System.out.println("Copies Available: " + movie.getCopiesAvailable());
-            System.out.println("Times Rented: " + movie.getTimesRented());
-
-        }
+        moviesCollection.displayAllMovies();
         memberMenu();  // display members menu again
     }
 
@@ -293,15 +285,6 @@ public class Main {
             } else if (flag == SUCCESS) {
                 // add number of copies and movie loaned to users property...
                   currentUser.setOnLoan(1, movieName);
-
-                  // test block
-                System.out.println("\n===> test User's loans");
-                HashMap<String, Integer> onLoans = currentUser.getAllLoans();
-                // print all the values
-                onLoans.forEach((key, value) -> System.out.println(key + " " + value));
-                System.out.println("\n=======================");
-                // end
-
 
                 System.out.println("You borrowed " + movieName);
                 memberMenu(); // return to menu
