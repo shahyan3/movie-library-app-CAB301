@@ -11,6 +11,7 @@ public class Main {
     private static final int UNAVAILABLE = 0;
     private static final int SUCCESS = 1;
     private static final int ERROR = -2;
+    private static final int DECREMENT_BY_ONE = 1;
 
 
     public static int EXIT = 0;
@@ -360,10 +361,24 @@ public class Main {
                     case 2:
                         borrowMovieMenu();
                     case 3:
+                        returnMovieMenu();
                     case 4:
                         listBorrowedMoviesMenu();
                 }
         }
+    }
+
+    public static void returnMovieMenu() throws InterruptedException {
+        String movieName;
+        scanner.nextLine();
+        System.out.println("Enter movie title: ");
+        movieName = scanner.nextLine();
+
+        // remove and/or decrement copy borrowed from from user's onLoad property
+        currentUser.returnMovie(movieName, DECREMENT_BY_ONE);
+
+        memberMenu();
+
     }
 
     /** MovieCollection Calls -- to be fixed after creating BST  **/

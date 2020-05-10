@@ -15,6 +15,7 @@ public class BinarySearchTree implements StringParser {
 
         return keyID;
     }
+    
 
     // returns true if movie added to tree
     public void addNode(String key, Movie movie) {

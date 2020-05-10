@@ -61,6 +61,27 @@ public class Member {
 
     }
 
+    public void returnMovie(String movieName, int returnCopies) {
+        Integer currentlyBorrowedCopies = this.onLoan.get(movieName);
+
+        if(currentlyBorrowedCopies != null && currentlyBorrowedCopies > 0) {
+            Integer updatedNumberOfCopies = currentlyBorrowedCopies - returnCopies;
+            System.out.println("Previously borrowed: " + currentlyBorrowedCopies);
+            System.out.println("updated (returned): " + updatedNumberOfCopies);
+            // update current borrow value from current value to updated for movieName (key)
+            this.onLoan.replace(movieName, currentlyBorrowedCopies, updatedNumberOfCopies);
+
+            // Remove the hashmap if the number of copies after removing is equal to 0
+            if(this.onLoan.get(movieName) == 0) {
+                this.onLoan.remove(movieName);
+            }
+
+            System.out.println("Movie DVD returned");
+        } else {
+            System.out.println("Invalid: Movie is not currently loan by this user.");
+        }
+    }
+
     // @returns - all the values loaned
     public HashMap<String, Integer> getAllLoans() {
         return this.onLoan;
