@@ -3,7 +3,7 @@ public class MemberCollection {
     // private Member member;
     private Member[] memberList;
     private int MAX_MEMBERS = 100;
-    private int currentMemberCountIndex;
+    private static int currentMemberCountIndex;
 
     public MemberCollection() {
         this.memberList = new Member[MAX_MEMBERS];

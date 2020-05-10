@@ -23,28 +23,28 @@ public class MoviesCollection {
     }
 
     public void addDefaultMovies() {
-        Movie movie1 = new Movie(1,"Aang 1", "Actor 1 and Actress 1",
+        Movie movie1 = new Movie("Aang 1", "Actor 1 and Actress 1",
                 "Director 1", "Thriller", "MA",
                 "60 minutes", 2012, 5, 0);
 
-        Movie movie2 = new Movie(2, "Bob's World", "Actress 1",
+        Movie movie2 = new Movie("Bob's World", "Actress 1",
                 "Director 2", "Animated", "MA",
                 "120 minutes", 1980, 2, 0);
 
 
-        Movie movie3 = new Movie( 3, "Aaab", "Actor 3",
+        Movie movie3 = new Movie( "Aaab", "Actor 3",
                 "Director 3", "Comedy", "MA",
                 "180 minutes", 2000, 3, 0);
 
-        Movie movie4 = new Movie(4, "Cat's World", "Actor 1 and Actress 1",
+        Movie movie4 = new Movie("Cat's World", "Actor 1 and Actress 1",
                 "Director 1", "Drama", "Parental Guidance (PG)",
                 "90 minutes", 2000, 5, 0);
 
-        Movie movie5 = new Movie(5, "Z", "Actor 1 and Actress 1",
+        Movie movie5 = new Movie("Z", "Actor 1 and Actress 1",
                 "Director 1", "Drama", "Parental Guidance (PG)",
                 "90 minutes", 2000, 5, 0);
 
-        Movie movie6 = new Movie(6, "Abbys", "Actor 1 and Actress 1",
+        Movie movie6 = new Movie("Abbys", "Actor 1 and Actress 1",
                 "Director 1", "Drama", "Parental Guidance (PG)",
                 "90 minutes", 2000, 5, 0);
 
@@ -93,6 +93,12 @@ public class MoviesCollection {
 
             }
             return ERROR;   // movie doesn't exist in bst
+    }
+
+    // adds movie to the bst
+    public void addMovie(Movie movie) {
+        String movieName = movie.getTitle();
+        this.moviesList.addNode(movieName, movie);
     }
 }
 

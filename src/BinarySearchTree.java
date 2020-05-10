@@ -16,27 +16,28 @@ public class BinarySearchTree implements StringParser {
         return keyID;
     }
 
-
+    // returns true if movie added to tree
     public void addNode(String key, Movie movie) {
         Node newNode = new Node(key, movie);
 
-        if(root == null) { // first time
+        if (root == null) { // first time
             root = newNode;
+            return;
         } else {
             // root node already created. Test for children nodes (lhs and rhs childs)
             Node focusNode = root;
 
             Node parent;
 
-            while(true) {
+            while (true) {
                 parent = focusNode; // save the root as parent and play with node in "focus" i.e. focusNode
 
 //                if( key < focusNode.key) { // LEFT child node test in bst: is the root's key is less than given node's key add to left child of root/parent node in tree                    focusNode =  focusNode.leftChild;
-                if(newNode.alphabeticallyWeight(newNode.key, focusNode.key) == -1) { // LEFT child node test in bst: is the root's key is less than given node's key add to left child of root/parent node in tree                    focusNode =  focusNode.leftChild;
+                if (newNode.alphabeticallyWeight(newNode.key, focusNode.key) == -1) { // LEFT child node test in bst: is the root's key is less than given node's key add to left child of root/parent node in tree                    focusNode =  focusNode.leftChild;
 
                     focusNode = focusNode.leftChild; // focus node is now "left child node"
 
-                    if(focusNode == null) { // if left child node of root or parent in null add newNode to left child
+                    if (focusNode == null) { // if left child node of root or parent in null add newNode to left child
                         parent.leftChild = newNode;
                         return;
 
@@ -44,7 +45,7 @@ public class BinarySearchTree implements StringParser {
                 } else { // RIGHT child node test in bst: the newNode's key is greater than parent node, add to the right child of parent (as is in bst structure)
                     focusNode = focusNode.rightChild; // focus on the right child of root/parent node
 
-                    if(focusNode == null) { // no nodes in the right child of root/parent add newNode then
+                    if (focusNode == null) { // no nodes in the right child of root/parent add newNode then
                         parent.rightChild = newNode;
                         return;
                     }
@@ -80,7 +81,7 @@ public class BinarySearchTree implements StringParser {
         if(focusNode != null) { // recursively traverse left child nodes first than right
             inOrderTraverseTree(focusNode.leftChild);
 
-            System.out.println("\n\n--Node: " + focusNode.toString());  // print recursively inorder node (or return!)
+//            System.out.println("\n\n--Node: " + focusNode.toString());  // print recursively inorder node (or return!)
             System.out.println(" ");
             System.out.println("Title: " + focusNode.movie.getTitle());
             System.out.println("Starring: " + focusNode.movie.getStarring());
@@ -143,20 +144,20 @@ class Node {
     }
 
     public int alphabeticallyWeight(String s1, String s2){
-        System.out.println("Comparing \"" + s1 + "\" to \"" + s2 + "\"...");
+//        System.out.println("Comparing \"" + s1 + "\" to \"" + s2 + "\"...");
 
         int comparisonResult = s1.compareTo(s2);
-        System.out.println("The result of the comparison was " + comparisonResult);
+//        System.out.println("The result of the comparison was " + comparisonResult);
 
-        System.out.print("This means that \"" + s1 + "\" ");
+//        System.out.print("This means that \"" + s1 + "\" ");
         if(comparisonResult < 0){
-            System.out.println("lexicographically comes (before) \"" + s2 + "\".");
+//            System.out.println("lexicographically comes (before) \"" + s2 + "\".");
             return -1;
         }else if(comparisonResult > 0){
-            System.out.println("lexicographically comes (after) \"" + s2 + "\".");
+//            System.out.println("lexicographically comes (after) \"" + s2 + "\".");
             return 1;
         }else{
-            System.out.println("equals \"" + s2 + "\".");
+//            System.out.println("equals \"" + s2 + "\".");
             return 2;
         }
     }

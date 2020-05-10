@@ -5,6 +5,7 @@ import java.util.Scanner;
 import java.lang.InterruptedException;
 import java.util.concurrent.TimeUnit;
 
+
 public class Main {
     private static final int NOT_FOUND = -1;
     private static final int UNAVAILABLE = 0;
@@ -25,7 +26,6 @@ public class Main {
         membersCollection = new MemberCollection();  // static ???
         moviesCollection = new MoviesCollection(); // static ???
         scanner = new Scanner(System.in);  // Create a Scanner object
-
 
         while(true) {
             // main menu - welcome
@@ -148,14 +148,123 @@ public class Main {
             switch (inputNum) {
                 case 0:
                     mainMenu();
-                case 1:
-                case 2:
+                 case 1:
+                    addMovieMenu();
+                 case 2:
+                     System.out.println("Remove a movie DVD...");
                 case 3:
                     registerMemberMenu();
-                case 4:
+                 case 4:
                     findMemberPhoneMenu();
-            }
+             }
         }
+    }
+
+    public static void addMovieMenu() throws InterruptedException {
+        String movieName;
+        String actors;
+        String directorName;
+        int genreInt;
+        String genre = null;
+        int classificationInt;
+        String classification = null;
+        String duration;
+        int releaseDate;
+        int copiesAvailable;
+        int timesRented = 0;
+
+        System.out.println(" ");
+        scanner.nextLine();
+        System.out.print("Enter the movie title: ");
+        movieName = scanner.nextLine().trim();
+
+        System.out.print("Enter the starring actor(s): ");
+        actors = scanner.nextLine();
+
+        System.out.print("Enter the director(s): ");
+        directorName = scanner.nextLine();
+
+        System.out.println("Select the genre: ");
+        System.out.println("1. Drama");
+        System.out.println("2. Adventure");
+        System.out.println("3. Family");
+        System.out.println("4. Action");
+        System.out.println("5. Sci-Fi");
+        System.out.println("6. Comedy");
+        System.out.println("7. Thriller");
+        System.out.println("8. Other");
+        System.out.print("Make selection(1-8): ");
+        genreInt = scanner.nextInt();
+
+        System.out.println("\nSelect the classification:");
+        System.out.println("1. General (G)");
+        System.out.println("2. Parental Guidance (PG)");
+        System.out.println("3. Mature (MA15+)");
+        System.out.println("4. Mature Accompanied (MA15+)");
+        System.out.print("\nMake selection(1-4): ");
+        classificationInt = scanner.nextInt();
+
+        System.out.print("Enter the duration (minutes): ");
+        duration = scanner.nextLine();
+
+        System.out.print("Enter the release date (year): ");
+        releaseDate = scanner.nextInt();
+
+        System.out.print("Enter the number of copies available: ");
+        copiesAvailable = scanner.nextInt();
+
+        // assign classificationInt based on the int value given
+            switch (classificationInt) {
+                case 1:
+                    classification = "General (G)";
+                    break;
+                case 2:
+                    classification = "Parental Guidance (PG)";
+                    break;
+                case 3:
+                    classification = "Mature (MA15+)";
+                    break;
+                case 4:
+                    classification = "Mature Accompanied (MA15+)";
+                    break;
+            }
+
+            // assign classification based on given user int value
+            switch (genreInt) {
+                case 1:
+                    genre = "Drama";
+                    break;
+                case 2:
+                    genre = "Adventure";
+                    break;
+                case 3:
+                    genre = "Family";
+                    break;
+                case 4:
+                    genre = "Action";
+                    break;
+                case 5:
+                    genre = "Sci-Fi";
+                    break;
+                case 6:
+                    genre = "Comedy";
+                    break;
+                case 7:
+                    genre = "Thriller";
+                    break;
+                case 8:
+                    genre = "Other";
+                    break;
+            }
+
+            // create a new movie object
+            Movie movie = new Movie(movieName, actors, directorName, genre, classification, duration, releaseDate,
+                        copiesAvailable, timesRented);
+
+            // add movie to collection
+            moviesCollection.addMovie(movie);
+
+            staffMenu();
     }
 
     public static void registerMemberMenu() throws InterruptedException {
