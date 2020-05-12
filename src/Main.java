@@ -12,6 +12,7 @@ public class Main {
     private static final int SUCCESS = 1;
     private static final int ERROR = -2;
     private static final int DECREMENT_BY_ONE = 1;
+    private static final int INCREMENT_BY_ONE = 1;
 
 
     public static int EXIT = 0;
@@ -152,7 +153,7 @@ public class Main {
                  case 1:
                     addMovieMenu();
                  case 2:
-                     System.out.println("Remove a movie DVD...");
+                     removeMovieMenu();
                 case 3:
                     registerMemberMenu();
                  case 4:
@@ -160,6 +161,23 @@ public class Main {
              }
         }
     }
+
+    // doesn't work
+    public static void removeMovieMenu() throws InterruptedException {
+        String movieName;
+
+        scanner.nextLine();
+        System.out.println("Enter a movie title: ");
+        movieName = scanner.nextLine();
+
+        moviesCollection.deleteMovie(movieName);
+
+        staffMenu();
+    }
+
+    public static void top10Movies() {
+        // prints their top then most borrowed movies
+     }
 
     public static void addMovieMenu() throws InterruptedException {
         String movieName;
@@ -374,11 +392,13 @@ public class Main {
         System.out.println("Enter movie title: ");
         movieName = scanner.nextLine();
 
-        // remove and/or decrement copy borrowed from from user's onLoad property
+        // 1. remove and/or decrement copy borrowed from from user's onLoad property
         currentUser.returnMovie(movieName, DECREMENT_BY_ONE);
 
-        memberMenu();
+        // 2. Update movie's times rented (increment copies in the library)
+        moviesCollection.returnMovie(movieName, INCREMENT_BY_ONE);
 
+        memberMenu();
     }
 
     /** MovieCollection Calls -- to be fixed after creating BST  **/

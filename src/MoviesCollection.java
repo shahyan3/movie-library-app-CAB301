@@ -100,5 +100,18 @@ public class MoviesCollection {
         String movieName = movie.getTitle();
         this.moviesList.addNode(movieName, movie);
     }
+
+    public void deleteMovie(String movieName) {
+       this.moviesList.remove(movieName);
+
+       System.out.println(movieName + " was deleted");
+    }
+
+    public void returnMovie(String movieName, int returnedCopies) {
+       Node node = this.moviesList.findNode(movieName);
+       node.movie.setCopiesAvailable(returnedCopies);
+     }
+
+
 }
 

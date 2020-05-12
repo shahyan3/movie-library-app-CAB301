@@ -15,7 +15,98 @@ public class BinarySearchTree implements StringParser {
 
         return keyID;
     }
-    
+
+    public boolean remove(String key) {
+        Node focusNode = root;
+        Node parent = root;
+
+        boolean isItALeftChild = true;
+
+        while(focusNode.key != key) {
+            parent = focusNode;
+
+            // key < focusNode.key
+            if(focusNode.alphabeticallyWeight(key, focusNode.key) == -1) {  // doesn't work #TODO
+                isItALeftChild = true;
+
+                focusNode = focusNode.leftChild;
+            } else {
+                isItALeftChild = false;
+                focusNode = focusNode.rightChild;
+            }
+
+            if(focusNode == null)
+                return  false;
+        }
+
+        // deleting part.
+        // at this point the node doesn't have children.
+        // now we're in the situation where we're going to delete these guys
+        if(focusNode.leftChild == null && focusNode.rightChild == null) {
+            if(focusNode == null) {
+                root = null;
+            } else if(isItALeftChild) {
+                parent.leftChild = null;
+            } else {
+                parent.rightChild = null;
+            }
+        }
+        // in a situation where there is no right child
+        else if(focusNode.rightChild == null) {
+            if(focusNode == root) {
+                root = focusNode.leftChild;
+            } else if(isItALeftChild) {
+                parent.leftChild = focusNode.leftChild;
+            } else {
+                parent.rightChild = focusNode.leftChild;
+            }
+        }
+
+        else if(focusNode.leftChild == null) {
+            if(focusNode == root) {
+                root = focusNode.rightChild;
+            } else if(isItALeftChild) {
+                parent.leftChild = focusNode.rightChild;
+            } else {
+                parent.rightChild = focusNode.leftChild;
+            }
+        }
+
+        else { // two children are involved
+            Node replacement = getReplacementNode(focusNode);
+
+            if(focusNode == root) {
+                root = replacement;
+            } else if(isItALeftChild) {
+                parent.leftChild = replacement;
+            } else
+                parent.rightChild = replacement;
+
+            replacement.leftChild = focusNode.leftChild;
+        }
+        return true;
+    }
+
+    public Node getReplacementNode(Node replacedNode) {
+        Node replacementParent = replacedNode;
+        Node replacement = replacedNode;
+
+        Node focusNode = replacedNode.rightChild;
+
+        while (focusNode != null) {
+            replacementParent = replacement;
+            replacement = focusNode;
+
+            focusNode = focusNode.leftChild;
+        }
+
+        if(replacement != replacedNode.rightChild) {
+            replacementParent.leftChild = replacement.rightChild;
+            replacement.rightChild = replacedNode.rightChild;
+        }
+
+        return replacement;
+    }
 
     // returns true if movie added to tree
     public void addNode(String key, Movie movie) {
@@ -124,6 +215,25 @@ public class BinarySearchTree implements StringParser {
 
         }
     }
+
+//    public Node getRoot() {
+//         return this.root ;
+//    }
+
+    // Alphabetically traverse movie (in order)
+//    public void topTenMoviesInTree(Node focusNode) {
+//        if(root != null) { // recursively traverse left child nodes first than right
+//            topTenMoviesInTree(focusNode.leftChild);
+//
+//            System.out.println(" ");
+//            System.out.println("Title: " + focusNode.movie.getTitle());
+//            System.out.println("Times Rented: " + focusNode.movie.getTimesRented());
+//
+//
+//
+//
+//            topTenMoviesInTree(focusNode.rightChild);
+//    }
 }
 
 class Node {

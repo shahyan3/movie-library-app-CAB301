@@ -68,7 +68,7 @@ public class Member {
             Integer updatedNumberOfCopies = currentlyBorrowedCopies - returnCopies;
             System.out.println("Previously borrowed: " + currentlyBorrowedCopies);
             System.out.println("updated (returned): " + updatedNumberOfCopies);
-            // update current borrow value from current value to updated for movieName (key)
+            // update User's property: current borrow value from current value to updated for movieName (key)
             this.onLoan.replace(movieName, currentlyBorrowedCopies, updatedNumberOfCopies);
 
             // Remove the hashmap if the number of copies after removing is equal to 0
@@ -86,4 +86,6 @@ public class Member {
     public HashMap<String, Integer> getAllLoans() {
         return this.onLoan;
     }
+
+
 }

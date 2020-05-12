@@ -18,6 +18,7 @@ public class Movie {
     private int releaseDate;
     private int copiesAvailable;
     private int timesRented;
+    private final int totalCopies;
 
     public Movie(String title, String starring, String director, String genre, String classification,
                  String duration, int releaseDate, int copiesAvailable, int timesRented) {
@@ -30,6 +31,8 @@ public class Movie {
         this.releaseDate = releaseDate;
         this.copiesAvailable = copiesAvailable;
         this.timesRented = timesRented;
+        // total copies is a constant is set to the available copies initially when admin added in store
+        this.totalCopies = this.copiesAvailable;
     }
 
     public String getTitle() {
@@ -77,6 +80,15 @@ public class Movie {
             return SUCCESS;
         } else {
             return UNAVAILABLE;
+        }
+    }
+    public void setCopiesAvailable(int returnedCopies) {
+        // increment copies in library
+        if(this.copiesAvailable != totalCopies) { // stops user from adding copies in system that don't exist!
+            this.copiesAvailable += returnedCopies;
+            System.out.println("Movie propert: copies available after returning is " + this.copiesAvailable);
+        } else {
+            System.out.println("Invalid request.");
         }
     }
 }

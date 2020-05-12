@@ -30,44 +30,6 @@ public class MemberCollection {
         this.currentMemberCountIndex = 8;    // #TODO make it 0 when i delete testUser!
     }
 
-//    private  Member binarySearch(String target) {
-//
-//        int l = 0;
-//        int r = this.memberList.length - 1;
-//        int midpoint = -1;
-//
-//        while (l <= r) {
-//            midpoint = l + (r - l)/2;
-//            System.out.println("Set midpoint = "+midpoint);
-//
-//            if(this.memberList.length == 0) {
-//                return null; // list and divided to the point all elements check, and not found.
-//            }
-//
-//                if (this.memberList[midpoint] !=null &&
-//                        target.compareTo(this.memberList[midpoint].getUsername()) == 0) { // eventually the only element left after recursive elimination will be midpoint  i.e.
-//                    System.out.println("midpoint found: " + this.memberList[midpoint].getUsername());
-//
-//                    return this.memberList[midpoint]; // member id found for the given "target" member id
-//                } else if (this.memberList[midpoint] !=null &&
-//                        target.compareTo(this.memberList[midpoint].getUsername()) > 0) { // midpoint greater than target
-//                    l = midpoint + 1;
-//                    if(this.memberList[midpoint] !=null) {
-//                        System.out.println("right side:User searching..." + this.memberList[midpoint].getUsername()
-//                        + " at index" + midpoint);
-//                    }
-//                } else { // midpoint is less than target
-//                    r = midpoint - 1;
-//                    if(this.memberList[midpoint] !=null) {
-//                        System.out.println("left side:User searching..." + this.memberList[midpoint].getUsername()  + " at index" + midpoint);
-//                    }
-//                }
-//
-//        }
-//
-//        return null; // array given is length 0 or 1 element.
-//    }
-
   //    Binary search O(log n) time - CONVERT INTO BINARY SEARCH!!! #TODO convert to binary search
     public Member authenticateMember(String username, String password) {
         for(int i = 0; i < this.memberList.length; i++) {
@@ -80,8 +42,6 @@ public class MemberCollection {
         }
         return null;
     }
-
-
 
     // Binary search O(log n) time - CONVERT INTO BINARY SEARCH!!! #TODO convert to binary search
     public boolean checkMemberExists(String firstName, String lastName) {
@@ -131,8 +91,5 @@ public class MemberCollection {
             }
         }
     }
-
-
-
 
 }
