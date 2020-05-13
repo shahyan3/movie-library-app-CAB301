@@ -86,7 +86,7 @@ public class Movie {
         // increment copies in library
         if(this.copiesAvailable != totalCopies) { // stops user from adding copies in system that don't exist!
             this.copiesAvailable += returnedCopies;
-            System.out.println("Movie propert: copies available after returning is " + this.copiesAvailable);
+//            System.out.println("Movie property: copies available after returning is " + this.copiesAvailable);
         } else {
             System.out.println("Invalid request.");
         }

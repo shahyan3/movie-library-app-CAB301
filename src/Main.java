@@ -175,8 +175,12 @@ public class Main {
         staffMenu();
     }
 
-    public static void top10Movies() {
+    public static void top10MoviesMenu() throws InterruptedException {
         // prints their top then most borrowed movies
+        System.out.println("Top 10 Most Popular Movies: ");
+        moviesCollection.getTopTen();
+
+        memberMenu();
      }
 
     public static void addMovieMenu() throws InterruptedException {
@@ -382,6 +386,8 @@ public class Main {
                         returnMovieMenu();
                     case 4:
                         listBorrowedMoviesMenu();
+                case 5:
+                    top10MoviesMenu();
                 }
         }
     }

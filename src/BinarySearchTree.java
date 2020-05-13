@@ -190,6 +190,7 @@ public class BinarySearchTree implements StringParser {
         }
     }
 
+
     // DFS - pre order variant traversal
     public void preOrderTraverseTree(Node focusNode) {
         if (focusNode != null) { // recursively traverse left child nodes first than right
@@ -216,26 +217,41 @@ public class BinarySearchTree implements StringParser {
         }
     }
 
-//    public Node getRoot() {
-//         return this.root ;
-//    }
+    public Node getRoot() {
+         return this.root ;
+    }
 
-    // Alphabetically traverse movie (in order)
-//    public void topTenMoviesInTree(Node focusNode) {
-//        if(root != null) { // recursively traverse left child nodes first than right
-//            topTenMoviesInTree(focusNode.leftChild);
-//
-//            System.out.println(" ");
-//            System.out.println("Title: " + focusNode.movie.getTitle());
-//            System.out.println("Times Rented: " + focusNode.movie.getTimesRented());
-//
-//
-//
-//
-//            topTenMoviesInTree(focusNode.rightChild);
-//    }
+    // traverse BST in order and return an array of movies (unsorted by times rented)
+    public Movie[] returnBSTAsArray(int totalMovies) {
+        Movie[] list = new Movie[totalMovies];
+        int index = 0;
+        storeInOrder(this.getRoot(), list, index);
+
+        return list;
+    }
+
+    /**
+     * insert the elements of the bst (denoted by root) into array,
+     * starting at index (the first available position in array) and
+     * returns the first available position after insertion)
+     * pre-conditions :
+     *    - root is a bst containing n elements
+     *    - array contains enough available cells
+     *    - index = i0
+     * post-conditions
+     *    - tree is unchanged
+     *    - array[i0..i0+n-1] contains elements of the bst
+     *    - functions returns i0+n
+     */
+    private int storeInOrder(Node root, Movie[] array, int index) {
+        if (root == null)
+            return index;
+        // then call on left, add root, call on right...
+        int i = storeInOrder(root.leftChild, array, index);
+        array[i] = root.movie;
+        return storeInOrder(root.rightChild, array, i+1);
+    }
 }
-
 class Node {
 //    public int key;
     public  String key;
