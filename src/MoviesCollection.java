@@ -124,7 +124,7 @@ public class MoviesCollection {
        // decrement total movies in library
        this.setMoviesCount(DECREMENT_BY_ONE);
 
-       System.out.println(movieName + " was deleted");
+       System.out.println("Movie: " +movieName +" deleted." );
     }
 
     public void returnMovie(String movieName, int returnedCopies) {

@@ -11,32 +11,30 @@ public class BinarySearchTree implements StringParser {
         {
             keyID += (int)buffer.charAt(i);
         }
-//        System.out.println("Movie id: "+ keyID);
-
         return keyID;
     }
 
-    public boolean remove(String key) {
+    public boolean remove(String key) { // movie name is the key in this BST
         Node focusNode = root;
         Node parent = root;
 
         boolean isItALeftChild = true;
 
-        while(focusNode.key != key) {
+        while(!focusNode.movie.getTitle().equals(key)) {
             parent = focusNode;
 
             // key < focusNode.key
-            if(focusNode.alphabeticallyWeight(key, focusNode.key) == -1) {  // doesn't work #TODO
+            if(focusNode.alphabeticallyWeight(key, focusNode.movie.getTitle()) == -1) {  // doesn't work #TODO
                 isItALeftChild = true;
-
                 focusNode = focusNode.leftChild;
             } else {
                 isItALeftChild = false;
                 focusNode = focusNode.rightChild;
             }
 
-            if(focusNode == null)
+            if(focusNode == null) {
                 return  false;
+            }
         }
 
         // deleting part.
@@ -51,7 +49,7 @@ public class BinarySearchTree implements StringParser {
                 parent.rightChild = null;
             }
         }
-        // in a situation where there is no right child
+        // in a situation where there is no right child (BUT Left child)
         else if(focusNode.rightChild == null) {
             if(focusNode == root) {
                 root = focusNode.leftChild;
@@ -61,27 +59,25 @@ public class BinarySearchTree implements StringParser {
                 parent.rightChild = focusNode.leftChild;
             }
         }
-
+        // in a sitation where there is no left child (BUT right child)
         else if(focusNode.leftChild == null) {
             if(focusNode == root) {
                 root = focusNode.rightChild;
             } else if(isItALeftChild) {
                 parent.leftChild = focusNode.rightChild;
+
             } else {
                 parent.rightChild = focusNode.leftChild;
             }
-        }
-
-        else { // two children are involved
+        } else { // in a situation where two children are involved exist of a node
             Node replacement = getReplacementNode(focusNode);
-
             if(focusNode == root) {
                 root = replacement;
             } else if(isItALeftChild) {
                 parent.leftChild = replacement;
-            } else
+            } else {
                 parent.rightChild = replacement;
-
+            }
             replacement.leftChild = focusNode.leftChild;
         }
         return true;
@@ -96,7 +92,6 @@ public class BinarySearchTree implements StringParser {
         while (focusNode != null) {
             replacementParent = replacement;
             replacement = focusNode;
-
             focusNode = focusNode.leftChild;
         }
 
@@ -104,7 +99,6 @@ public class BinarySearchTree implements StringParser {
             replacementParent.leftChild = replacement.rightChild;
             replacement.rightChild = replacedNode.rightChild;
         }
-
         return replacement;
     }
 

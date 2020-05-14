@@ -168,7 +168,7 @@ public class Main {
 
         scanner.nextLine();
         System.out.println("Enter a movie title: ");
-        movieName = scanner.nextLine();
+        movieName = scanner.nextLine().trim();
 
         moviesCollection.deleteMovie(movieName);
 
